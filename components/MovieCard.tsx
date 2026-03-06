@@ -1,11 +1,6 @@
 import { icons } from "@/constants/icons";
 import { Link } from "expo-router";
-import {
-  Image,
-  Pressable,
-  Text,
-  View,
-} from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 
 export default function MovieCard({
   id,
@@ -13,11 +8,13 @@ export default function MovieCard({
   title,
   vote_average,
   release_date,
-}: Movie) {
+  containerClassName,
+}: Movie & { containerClassName?: string }) {
   return (
     <>
       <Link href={`/movies/${id}`} asChild>
-        <Pressable className="w-[30%]">
+        {/* <Pressable className="w-[30%]"> */}
+        <Pressable className={containerClassName ?? "w-[30%]"}>
           <View>
             <Image
               source={{
@@ -33,7 +30,7 @@ export default function MovieCard({
             {title}
           </Text>
 
-          <View className="flex-row items-center justify-start gap-x-1">
+          {/* <View className="flex-row items-center justify-start gap-x-1">
             <Image source={icons.star} className="size-4" />
             <Text className="text-xs text-white font-bold uppercase">
               {Math.round(vote_average)}
@@ -41,6 +38,18 @@ export default function MovieCard({
           </View>
 
           <View className="flex-row items-center justify-between">
+            <Text className="text-xs text-light-200 font-medium mt-1">
+              {release_date?.split("-")[0]}
+            </Text>
+          </View> */}
+
+          <View className="mt-3 flex-row justify-between">
+            <View className="flex-row items-center justify-start gap-x-1">
+              <Image source={icons.star} className="size-4" />
+              <Text className="text-xs text-white font-bold uppercase">
+                {vote_average.toFixed(1)}
+              </Text>
+            </View>
             <Text className="text-xs text-light-200 font-medium mt-1">
               {release_date?.split("-")[0]}
             </Text>
