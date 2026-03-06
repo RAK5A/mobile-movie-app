@@ -26,7 +26,7 @@ export const fetchMovies = async ({
   }
 
   const data = await response.json();
-  return data.results;
+  return data.results.slice(0, 9);
 };
 
 export const fecthMovieDetails = async (
@@ -70,4 +70,65 @@ export const fetchMovieTrailer = async (
     console.log("Error fetching movie trailer:", error);
     return null;
   }
+};
+
+export const fetchTrendingMovies = async (): Promise<Movie[]> => {
+  const response = await fetch(`${TMDB_CONFIG.BASE_URL}/trending/movie/week`, {
+    method: "GET",
+    headers: TMDB_CONFIG.headers,
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch trending movies: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  return data.results.slice(0, 10); // ← show only 10 movies
+};
+
+export const fetchUpComingMovies = async (): Promise<Movie[]> => {
+  const response = await fetch(`${TMDB_CONFIG.BASE_URL}/movie/upcoming`, {
+    method: "GET",
+    headers: TMDB_CONFIG.headers,
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch upcoming movies: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  return data.results.slice(0, 10); // ← show only 10 movies
+};
+
+export const fetchTopRatedMovies = async (): Promise<Movie[]> => {
+  const response = await fetch(`${TMDB_CONFIG.BASE_URL}/movie/top_rated`, {
+    method: "GET",
+    headers: TMDB_CONFIG.headers,
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch top rated movies: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  return data.results.slice(0, 10); // ← show only 10 movies
+};
+
+export const fetchMoviesByCategory = async (category: string, page: number = 1): Promise<Movie[]> => {
+  const endpoints: Record<string, string> = {
+    trending: `${TMDB_CONFIG.BASE_URL}/trending/movie/week?page=${page}`,
+    upcoming: `${TMDB_CONFIG.BASE_URL}/movie/upcoming?page=${page}`,
+    top_rated: `${TMDB_CONFIG.BASE_URL}/movie/top_rated?page=${page}`,
+    latest: `${TMDB_CONFIG.BASE_URL}/discover/movie?sort_by=popularity.desc&page=${page}`,
+  };
+
+  const response = await fetch(`${endpoints[category]}&page=${page}`, {
+    method: "GET",
+    headers: TMDB_CONFIG.headers,
+  });
+
+  if (!response.ok) throw new Error(`Failed to fetch: ${response.statusText}`);
+
+  const data = await response.json();
+  return data.results;
 };
