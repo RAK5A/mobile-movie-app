@@ -1,25 +1,66 @@
-## Get started
+## <a name="quick-start">🤸 Quick Start</a>
 
-1. Start the app
+Follow these steps to set up the project locally on your machine.
 
-   ```bash
-   npx expo start
-   ```
+**Prerequisites**
 
-   Start on web
+Make sure you have the following installed on your machine:
 
-   ```bash
-   npm run web
-   ```
+- [Git](https://git-scm.com/)
 
-   Start on Android
+- [Node.js](https://nodejs.org/en)
 
-   ```bash
-   npm run android
-   ```
+- [npm](https://www.npmjs.com/) (Node Package Manager)
 
-   Start on IOS
+**Cloning the Repository**
 
-   ```bash
-   npm run ios
-   ```
+```bash
+git clone https://github.com/RAK5A/mobile-movie-app.git
+
+cd mobile-movie-app
+```
+
+**Installation**
+
+Install the project dependencies using npm:
+
+```bash
+npm install
+```
+
+**Set Up Environment Variables**
+
+Create a new file named `.env` in the root of your project and add the following content:
+
+```env
+
+EXPO_PUBLIC_MOVIE_API_KEY=
+```
+
+Replace the placeholder values with your actual TMDB API key. You can obtain these credentials by signing up on the [TMDB](https://www.themoviedb.org/login).
+
+**Running the Project**
+
+```bash
+
+npx expo start
+
+```
+
+Start on web
+
+```bash
+npm run web
+```
+
+Start on Android
+
+```bash
+npm run android
+```
+
+Start on IOS
+
+```bash
+npm run ios
+```
