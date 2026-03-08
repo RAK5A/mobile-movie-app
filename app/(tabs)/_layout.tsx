@@ -4,7 +4,6 @@ import { Tabs } from "expo-router";
 import React from "react";
 import { Image, ImageBackground, Text, View } from "react-native";
 
-
 const TabIcon = ({ focused, icon, title }: any) => {
   if (focused) {
     return (
@@ -54,9 +53,33 @@ export default function _layout() {
         name="index"
         options={{
           headerShown: false,
-          title: "Home",
+          title: "Movies",
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.home} title="Home" />
+            <TabIcon
+              focused={focused}
+              icon={icons.clapperboard}
+              title="Movies"
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="tv_show"
+        options={{
+          headerShown: false,
+          title: "TV Shows",
+          tabBarIcon: ({ focused }) => (
+            <TabIcon focused={focused} icon={icons.tv} title="TV Shows" />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="people"
+        options={{
+          headerShown: false,
+          title: "People",
+          tabBarIcon: ({ focused }) => (
+            <TabIcon focused={focused} icon={icons.person} title="People" />
           ),
         }}
       />
@@ -67,26 +90,6 @@ export default function _layout() {
           title: "Search",
           tabBarIcon: ({ focused }) => (
             <TabIcon focused={focused} icon={icons.search} title="Search" />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="saved"
-        options={{
-          headerShown: false,
-          title: "Saved",
-          tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.save} title="Saved" />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          headerShown: false,
-          title: "Profile",
-          tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.person} title="Profile" />
           ),
         }}
       />

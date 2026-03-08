@@ -26,7 +26,7 @@ export const fetchMovies = async ({
   }
 
   const data = await response.json();
-  return data.results.slice(0, 9);
+  return data.results;
 };
 
 export const fecthMovieDetails = async (
@@ -131,4 +131,14 @@ export const fetchMoviesByCategory = async (category: string, page: number = 1):
 
   const data = await response.json();
   return data.results;
+};
+
+export const fetchMovieCast = async (movieId: string) => {
+  const response = await fetch(
+    `${TMDB_CONFIG.BASE_URL}/movie/${movieId}/credits`,
+    { method: "GET", headers: TMDB_CONFIG.headers }
+  );
+  if (!response.ok) throw new Error("Failed to fetch cast");
+  const data = await response.json();
+  return data.cast.slice(0, 10); // top 10 cast members
 };
