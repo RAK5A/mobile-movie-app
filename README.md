@@ -28,6 +28,10 @@ Install the project dependencies using npm:
 npm install
 ```
 
+```bash
+npm i react-native-webview
+```
+
 **Set Up Environment Variables**
 
 Create a new file named `.env` in the root of your project and add the following content:

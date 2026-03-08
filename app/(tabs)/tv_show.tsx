@@ -2,17 +2,17 @@ import { icons } from "@/constants/icons";
 import React from "react";
 import { Image, Text, View } from "react-native";
 
-export default function Saved() {
+export default function TVShow() {
   return (
     <View className="flex-1 bg-primary px-10">
       <View className="flex justify-center items-center flex-1 flex-col gap-5">
         <Image
-          source={icons.save}
+          source={icons.tv}
           className="size-10"
           resizeMode="cover"
-          tintColor="Fff"
+          tintColor="white"
         />
-        <Text className="text-gray-500 text-base">Save</Text>
+        <Text className="text-gray-500 text-base">TV Shows</Text>
       </View>
     </View>
   );
