@@ -1,19 +1,64 @@
 import { icons } from "@/constants/icons";
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, View, ScrollView } from "react-native";
+import MovieSection from "@/components/MovieSection";
+import useFetch from "@/services/usefetch";
+import {
+  fetchTrendingTVShows,
+  fetchPopularTVShows,
+  fetchTopRatedTVShows,
+} from "@/services/api";
 
 export default function TVShow() {
+  const {
+    data: trending,
+    loading: trendingLoading,
+    error: trendingError,
+  } = useFetch(() => fetchTrendingTVShows());
+
+  const {
+    data: popular,
+    loading: popularLoading,
+    error: popularError,
+  } = useFetch(() => fetchPopularTVShows());
+
+  const {
+    data: topRated,
+    loading: topRatedLoading,
+    error: topRatedError,
+  } = useFetch(() => fetchTopRatedTVShows());
+
   return (
-    <View className="flex-1 bg-primary px-10">
-      <View className="flex justify-center items-center flex-1 flex-col gap-5">
-        <Image
-          source={icons.tv}
-          className="size-10"
-          resizeMode="cover"
-          tintColor="white"
+    <View className="flex-1 bg-primary">
+      <Image
+        source={icons.logo}
+        className="w-12 h-10 mt-20 mb-5 mx-auto"
+      />
+      <ScrollView className="px-5" contentContainerStyle={{ paddingBottom: 80 }}>
+        <MovieSection
+          title="Trending TV Shows"
+          data={trending}
+          loading={trendingLoading}
+          error={trendingError}
+          category="trending_tv"
         />
-        <Text className="text-gray-500 text-base">TV Shows</Text>
-      </View>
+
+        <MovieSection
+          title="Popular TV Shows"
+          data={popular}
+          loading={popularLoading}
+          error={popularError}
+          category="popular_tv"
+        />
+
+        <MovieSection
+          title="Top Rated TV"
+          data={topRated}
+          loading={topRatedLoading}
+          error={topRatedError}
+          category="top_rated_tv"
+        />
+      </ScrollView>
     </View>
   );
 }

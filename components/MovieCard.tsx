@@ -2,17 +2,25 @@ import { icons } from "@/constants/icons";
 import { Link } from "expo-router";
 import { Image, Pressable, Text, View } from "react-native";
 
+interface MovieCardProps extends Movie {
+  containerClassName?: string;
+  mediaType?: "movie" | "tv"; // default movie
+}
+
 export default function MovieCard({
   id,
   poster_path,
   title,
-  vote_average,
-  release_date,
+  vote_average = 0,
+  release_date = "",
   containerClassName,
-}: Movie & { containerClassName?: string }) {
+  mediaType = "movie",
+}: MovieCardProps) {
+  const href = mediaType === "tv" ? `/tv/${id}` : `/movies/${id}`;
+
   return (
     <>
-      <Link href={`/movies/${id}`} asChild>
+      <Link href={href} asChild>
         {/* <Pressable className="w-[30%]"> */}
         <Pressable className={containerClassName ?? "w-[30%]"}>
           <View>
@@ -30,28 +38,15 @@ export default function MovieCard({
             {title}
           </Text>
 
-          {/* <View className="flex-row items-center justify-start gap-x-1">
-            <Image source={icons.star} className="size-4" />
-            <Text className="text-xs text-white font-bold uppercase">
-              {Math.round(vote_average)}
-            </Text>
-          </View>
-
-          <View className="flex-row items-center justify-between">
-            <Text className="text-xs text-light-200 font-medium mt-1">
-              {release_date?.split("-")[0]}
-            </Text>
-          </View> */}
-
           <View className="mt-3 flex-row justify-between">
             <View className="flex-row items-center justify-start gap-x-1">
               <Image source={icons.star} className="size-4" />
               <Text className="text-xs text-white font-bold uppercase">
-                {vote_average.toFixed(1)}
+                {vote_average ? vote_average.toFixed(1) : "-"}
               </Text>
             </View>
             <Text className="text-xs text-light-200 font-medium mt-1">
-              {release_date?.split("-")[0]}
+              {release_date ? release_date.split("-")[0] : ""}
             </Text>
           </View>
         </Pressable>

@@ -1,6 +1,6 @@
 import Trailer from "@/components/Trailer";
 import { icons } from "@/constants/icons";
-import { fecthMovieDetails, fetchMovieCast, fetchMovieTrailer } from "@/services/api";
+import { fetchTVDetails, fetchTVCast, fetchTVTrailer } from "@/services/api";
 import useFetch from "@/services/usefetch";
 import { images } from "@/constants/images";
 import { LinearGradient } from "expo-linear-gradient";
@@ -24,22 +24,22 @@ const InfoChip = ({ text }: { text: string }) => (
   </View>
 );
 
-const StatItem = ({ label, value }: { label: string; value: string }) => (
+const StatItem = ({ label, value }: { label: string; value: string | number }) => (
   <View className="flex-1 items-center">
     <Text className="text-light-200 text-[10px] uppercase tracking-tighter mb-1">{label}</Text>
     <Text className="text-white font-bold text-sm">{value}</Text>
   </View>
 );
 
-export default function MovieDetail() {
+export default function TVDetail() {
   const { id } = useLocalSearchParams();
-  const { data: movie, loading } = useFetch(
-    () => fecthMovieDetails(id as string),
+  const { data: tv, loading } = useFetch(
+    () => fetchTVDetails(id as string),
     true,
     [id]
   );
   const { data: cast, loading: castLoading } = useFetch(
-    () => fetchMovieCast(id as string),
+    () => fetchTVCast(id as string),
     true,
     [id]
   );
@@ -50,7 +50,7 @@ export default function MovieDetail() {
 
   const handlePlayPress = async () => {
     setLoadingTrailer(true);
-    const key = await fetchMovieTrailer(Number(id));
+    const key = await fetchTVTrailer(Number(id));
     setTrailerKey(key);
     setLoadingTrailer(false);
     setModalVisible(true);
@@ -79,9 +79,9 @@ export default function MovieDetail() {
         <View className="relative w-full h-[600px]">
           <Image
             source={{
-              uri: movie?.poster_path
-                ? `https://image.tmdb.org/t/p/w780${movie.poster_path}`
-                : `https://placehold.co/600x900/1a1a1a/ffffff.png`,
+              uri: tv?.poster_path
+                ? `https://image.tmdb.org/t/p/w780${tv.poster_path}`
+                : `https://placehold.co/600x900/1a1a1a/ffffff.png?text=${encodeURIComponent(tv?.name || "TV Show")}`,
             }}
             className="w-full h-full"
             resizeMode="cover"
@@ -128,22 +128,22 @@ export default function MovieDetail() {
           {/* Bottom Info Section */}
           <View className="absolute bottom-0 left-0 right-0 px-5 pb-8">
             <View className="flex-row items-center gap-x-2 mb-3">
-              <InfoChip text={movie?.release_date ? movie.release_date.split("-")[0] : "N/A"} />
-              <InfoChip text={`${movie?.runtime || 0} min`} />
+              <InfoChip text={tv?.first_air_date ? tv.first_air_date.split("-")[0] : "N/A"} />
+              <InfoChip text={`${tv?.number_of_seasons || 0} Seasons`} />
               <View className="flex-row items-center bg-accent/20 px-2 py-1 rounded-lg border border-accent/30">
                 <Ionicons name="star" size={12} color="#AB8BFF" />
                 <Text className="text-accent text-[10px] font-bold ml-1">
-                  {movie?.vote_average.toFixed(1)}
+                  {tv?.vote_average.toFixed(1)}
                 </Text>
               </View>
             </View>
 
             <Text className="text-white text-4xl font-black mb-4 leading-none" numberOfLines={2}>
-              {movie?.title}
+              {tv?.name}
             </Text>
 
             <View className="flex-row flex-wrap gap-2">
-              {movie?.genres.map((genre) => (
+              {tv?.genres.map((genre) => (
                 <Text key={genre.id} className="text-light-200 text-xs font-medium">
                   • {genre.name}
                 </Text>
@@ -157,18 +157,18 @@ export default function MovieDetail() {
           {/* Stats Grid */}
           <View className="flex-row bg-dark-100/50 rounded-2xl py-5 border border-white/5 mb-8">
             <StatItem 
-              label="Budget" 
-              value={movie?.budget ? `$${(movie.budget / 1_000_000).toFixed(1)}M` : "N/A"} 
+              label="Episodes" 
+              value={tv?.number_of_episodes || "N/A"} 
             />
             <View className="w-[1px] h-8 bg-white/10" />
             <StatItem 
-              label="Revenue" 
-              value={movie?.revenue ? `$${(movie.revenue / 1_000_000).toFixed(0)}M` : "N/A"} 
+              label="Status" 
+              value={tv?.first_air_date ? "Released" : "N/A"} 
             />
             <View className="w-[1px] h-8 bg-white/10" />
             <StatItem 
               label="Votes" 
-              value={movie?.vote_count?.toLocaleString() || "0"} 
+              value={tv?.vote_count?.toLocaleString() || "0"} 
             />
           </View>
 
@@ -176,7 +176,7 @@ export default function MovieDetail() {
           <View className="mb-8">
             <Text className="text-white font-bold text-xl mb-3">Storyline</Text>
             <Text className="text-light-200 text-sm leading-6 text-justify">
-              {movie?.overview || "No overview available."}
+              {tv?.overview || "No overview available."}
             </Text>
           </View>
 
@@ -229,7 +229,7 @@ export default function MovieDetail() {
           <View className="mb-10 p-5 bg-dark-100/50 rounded-3xl border border-white/5">
             <Text className="text-light-200 text-[10px] uppercase tracking-widest mb-3">Production</Text>
             <Text className="text-white text-sm font-medium leading-5">
-              {movie?.production_companies.map((c) => c.name).join(" • ") || "N/A"}
+              {tv?.production_companies?.map((c) => c.name).join(" • ") || "N/A"}
             </Text>
           </View>
         </View>

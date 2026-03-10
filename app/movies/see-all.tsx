@@ -1,5 +1,5 @@
 import MovieCard from "@/components/MovieCard";
-import { fetchMoviesByCategory } from "@/services/api";
+import { fetchMoviesByCategory, fetchTVByCategory } from "@/services/api";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
@@ -22,7 +22,11 @@ export default function SeeAll() {
 
   const loadMovies = async (pageNum: number) => {
     try {
-      const results = await fetchMoviesByCategory(category as string, pageNum);
+      const cat = category as string;
+      const isTV = cat.endsWith("_tv");
+      const results = isTV
+        ? await fetchTVByCategory(cat, pageNum)
+        : await fetchMoviesByCategory(cat, pageNum);
       setMovies((prev) => pageNum === 1 ? results : [...prev, ...results]);
     } catch (e) {
       console.error(e);
@@ -64,7 +68,12 @@ export default function SeeAll() {
       ) : (
         <FlatList
           data={movies}
-          renderItem={({ item }) => <MovieCard {...item} />}
+          renderItem={({ item }) => (
+            <MovieCard
+              {...item}
+              mediaType={category?.toString().endsWith("_tv") ? "tv" : "movie"}
+            />
+          )}
           keyExtractor={(item) => item.id.toString()}
           numColumns={3}
           columnWrapperStyle={{
