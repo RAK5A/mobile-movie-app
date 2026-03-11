@@ -5,17 +5,15 @@ import { Image, TextInput, View } from "react-native";
 interface Props {
   placeholder: string;
   onPress?: () => void;
-  // onChangeText: (text: string) => void;
-  // onSubmitEditing: () => void;
-  // value?: string;
+  onChangeText: (text: string) => void;
+  value?: string;
 }
 
 export default function SearchBar({
   placeholder,
   onPress,
-  // onSubmitEditing,
-  // onChangeText,
-  // value,
+  onChangeText,
+  value,
 }: Props) {
   return (
     <View className="flex flex-row items-center bg-dark-200 rounded-full px-5 py-4">
@@ -28,12 +26,8 @@ export default function SearchBar({
 
       <TextInput
         onPress={onPress}
-        onChangeText={() => {}}
-        value=""
-        // value={value}
-        // onChangeText={onChangeText}
-        // onSubmitEditing={onSubmitEditing}
-        // returnKeyType="search"
+        onChangeText={onChangeText}
+        value={value}
         placeholder={placeholder}
         placeholderTextColor="#a8b5db"
         className="flex-1 ml-2 text-white"

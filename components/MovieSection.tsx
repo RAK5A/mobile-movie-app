@@ -32,7 +32,7 @@ export default function MovieSection({
         <Text className="text-lg text-white font-bold">{title}</Text>
         <TouchableOpacity
           onPress={() =>
-            router.push(`/movies/see-all?category=${category}&title=${title}`)
+            router.push(`/movies/see_all?category=${category}&title=${title}`)
           }
         >
           <View className="flex-row gap-x-2">

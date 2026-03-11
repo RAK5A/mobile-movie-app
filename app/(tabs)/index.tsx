@@ -10,10 +10,12 @@ import {
 } from "@/services/api";
 import useFetch from "@/services/usefetch";
 import { useRouter } from "expo-router";
+import { useState } from "react";
 import { FlatList, Image, View } from "react-native";
 
 export default function Index() {
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
   const {
     data: movies,
     loading: moviesLoading,
@@ -61,16 +63,17 @@ export default function Index() {
         renderItem={null}
         className="flex-1 px-5"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ minHeight: "100%", paddingBottom: 100, }}
+        contentContainerStyle={{ minHeight: "100%", paddingBottom: 100 }}
         ListHeaderComponent={
           <>
-            <Image
-              source={icons.logo}
-              className="w-12 h-10 mt-20 mb-5 mx-auto"
-            />
+            <View className="w-full flex-row justify-center mt-20 mb-10">
+              <Image source={icons.logo} className="w-12 h-10" />
+            </View>
             <SearchBar
               onPress={() => router.push("/search")}
               placeholder="Search for a movie"
+              value={searchQuery}
+              onChangeText={(text) => setSearchQuery(text)}
             />
 
             {/* Trending Section */}

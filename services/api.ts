@@ -114,7 +114,10 @@ export const fetchTopRatedMovies = async (): Promise<Movie[]> => {
   return data.results.slice(0, 10); // ← show only 10 movies
 };
 
-export const fetchMoviesByCategory = async (category: string, page: number = 1): Promise<Movie[]> => {
+export const fetchMoviesByCategory = async (
+  category: string,
+  page: number = 1,
+): Promise<Movie[]> => {
   const endpoints: Record<string, string> = {
     trending: `${TMDB_CONFIG.BASE_URL}/trending/movie/week?page=${page}`,
     upcoming: `${TMDB_CONFIG.BASE_URL}/movie/upcoming?page=${page}`,
@@ -136,9 +139,47 @@ export const fetchMoviesByCategory = async (category: string, page: number = 1):
 export const fetchMovieCast = async (movieId: string) => {
   const response = await fetch(
     `${TMDB_CONFIG.BASE_URL}/movie/${movieId}/credits`,
-    { method: "GET", headers: TMDB_CONFIG.headers }
+    { method: "GET", headers: TMDB_CONFIG.headers },
   );
   if (!response.ok) throw new Error("Failed to fetch cast");
   const data = await response.json();
   return data.cast.slice(0, 10); // top 10 cast members
+};
+
+export const fetchPopularPeople = async (page: number = 1) => {
+  const response = await fetch(
+    `${TMDB_CONFIG.BASE_URL}/person/popular?page=${page}`,
+    { method: "GET", headers: TMDB_CONFIG.headers },
+  );
+
+  if (!response.ok) throw new Error("Failed to fetch people");
+
+  const data = await response.json();
+  return data.results;
+};
+
+export const fetchPeopleId = async (personId: string) => {
+  const response = await fetch(`${TMDB_CONFIG.BASE_URL}/person/${personId}`, {
+    method: "GET",
+    headers: TMDB_CONFIG.headers,
+  });
+
+  if (!response.ok) throw new Error("Failed to fetch person detail");
+
+  const data = await response.json();
+
+  return data.results;
+};
+
+export const fetchPersonMovie = async (personId: string) => {
+  const response = await fetch(
+    `${TMDB_CONFIG.BASE_URL}/person/${personId}/movie_credits`,
+    { method: "GET", headers: TMDB_CONFIG.headers },
+  );
+
+  if (!response.ok) throw new Error("Failed to fetch person movie");
+
+  const data = await response.json();
+
+  return data.results.slice(0, 10);
 };

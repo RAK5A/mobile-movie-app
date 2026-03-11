@@ -70,3 +70,29 @@ interface MovieDetails {
   vote_average: number;
   vote_count: number;
 }
+
+interface Person {
+  id: number;
+  name: string;
+  profile_path: string | null;
+  known_for_department: string;
+  popularity: number;
+  known_for: {
+    id: number;
+    title: string;
+    poster_path: string | null;
+  }[];
+}
+
+interface PersonId{
+  id: number;
+  name: string;
+  profile_path: string | null;
+  know_for_department: string;
+  biography: string;
+  birthday: string;
+  deathday: string | null;
+  place_of_birth: string | null;
+  popularity: string;
+  also_know_as: string[];
+}
