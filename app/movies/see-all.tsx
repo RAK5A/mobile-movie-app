@@ -1,4 +1,5 @@
-import MovieCard from "@/components/MovieCard";
+import MovieCard from "@/components/PosterCard";
+import { icons } from "@/constants/icons";
 import { fetchMoviesByCategory } from "@/services/api";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -11,7 +12,6 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { icons } from "@/constants/icons";
 
 export default function SeeAll() {
   const { category, title } = useLocalSearchParams();
@@ -23,7 +23,7 @@ export default function SeeAll() {
   const loadMovies = async (pageNum: number) => {
     try {
       const results = await fetchMoviesByCategory(category as string, pageNum);
-      setMovies((prev) => pageNum === 1 ? results : [...prev, ...results]);
+      setMovies((prev) => (pageNum === 1 ? results : [...prev, ...results]));
     } catch (e) {
       console.error(e);
     } finally {
@@ -77,7 +77,9 @@ export default function SeeAll() {
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.5}
           ListFooterComponent={
-            loadingMore ? <ActivityIndicator size="small" color="#fff" className="my-4" /> : null
+            loadingMore ? (
+              <ActivityIndicator size="small" color="#fff" className="my-4" />
+            ) : null
           }
         />
       )}
