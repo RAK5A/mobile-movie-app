@@ -12,8 +12,9 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { icons } from "@/constants/icons";
+import PosterCard from "@/components/PosterCard";
 
-export default function SeeAll() {
+export default function SeeAllMovies() {
   const { category, title } = useLocalSearchParams();
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
@@ -23,7 +24,7 @@ export default function SeeAll() {
   const loadMovies = async (pageNum: number) => {
     try {
       const results = await fetchMoviesByCategory(category as string, pageNum);
-      setMovies((prev) => pageNum === 1 ? results : [...prev, ...results]);
+      setMovies((prev) => (pageNum === 1 ? results : [...prev, ...results]));
     } catch (e) {
       console.error(e);
     } finally {
@@ -64,7 +65,7 @@ export default function SeeAll() {
       ) : (
         <FlatList
           data={movies}
-          renderItem={({ item }) => <MovieCard {...item} />}
+          renderItem={({ item }) => <PosterCard {...item} />}
           keyExtractor={(item) => item.id.toString()}
           numColumns={3}
           columnWrapperStyle={{
@@ -77,7 +78,9 @@ export default function SeeAll() {
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.5}
           ListFooterComponent={
-            loadingMore ? <ActivityIndicator size="small" color="#fff" className="my-4" /> : null
+            loadingMore ? (
+              <ActivityIndicator size="small" color="#fff" className="my-4" />
+            ) : null
           }
         />
       )}

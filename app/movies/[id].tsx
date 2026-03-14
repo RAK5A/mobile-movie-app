@@ -99,13 +99,7 @@ export default function MovieDetail() {
 
         <View className="px-5 -mt-2">
           <Text className="text-light-200 text-sm">
-            {movie?.release_date
-              ? new Date(movie.release_date).toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                })
-              : "N/A"}
+            {movie?.release_date.split("-")[0]}
           </Text>
 
           <Text className="text-white text-2xl font-bold mt-1">
@@ -144,6 +138,12 @@ export default function MovieDetail() {
           {/* Budget & Revenue */}
           <View className="flex-row gap-x-8 mt-4">
             <View>
+              <Text className="text-light-200 text-xs">Status</Text>
+              <Text className="text-white font-bold text-sm mt-0.5">
+                {movie?.status}
+              </Text>
+            </View>
+            <View>
               <Text className="text-light-200 text-xs">Budget</Text>
               <Text className="text-white font-bold text-sm mt-0.5">
                 ${((movie?.budget ?? 0) / 1_000_000).toFixed(1)} M
@@ -157,11 +157,26 @@ export default function MovieDetail() {
             </View>
           </View>
 
-          {/* Cast */}
+          {/* Overview */}
           <View className="mt-6">
+            <Text className="text-white font-bold text-lg mb-2">Overview</Text>
+            <Text className="text-light-200 text-sm mb-4 italic">
+              {movie?.tagline}
+            </Text>
+            <Text className="text-gray-100 text-sm leading-6">
+              {movie?.overview || "N/A"}
+            </Text>
+          </View>
+
+          {/* Cast */}
+          <View className="mt-2">
             <View className="flex-row items-center justify-between mb-2 mt-6">
               <Text className="text-lg text-white font-bold">Cast</Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  router.push(`/movies/cast?id=${id}&title=${movie?.title}`)
+                }
+              >
                 <View className="flex-row gap-x-2">
                   <Text className="text-sm font-medium text-white">
                     See All
@@ -184,7 +199,9 @@ export default function MovieDetail() {
                 keyExtractor={(item) => item.id.toString()}
                 contentContainerStyle={{ gap: 10 }}
                 renderItem={({ item }) => (
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => router.push(`/people/${item.id}`)}
+                  >
                     <View className="w-24 rounded-xl overflow-hidden bg-dark-100">
                       <Image
                         source={{
@@ -214,14 +231,6 @@ export default function MovieDetail() {
                 )}
               />
             )}
-          </View>
-
-          {/* Overview */}
-          <View className="mt-6">
-            <Text className="text-white font-bold text-lg mb-2">Overview</Text>
-            <Text className="text-light-200 text-sm leading-6">
-              {movie?.overview || "N/A"}
-            </Text>
           </View>
 
           {/* Production */}
