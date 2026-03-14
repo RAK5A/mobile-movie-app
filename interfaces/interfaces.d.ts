@@ -84,7 +84,7 @@ interface Person {
   }[];
 }
 
-interface PersonId{
+interface PersonId {
   id: number;
   name: string;
   profile_path: string | null;
@@ -95,4 +95,70 @@ interface PersonId{
   place_of_birth: string | null;
   popularity: string;
   also_know_as: string[];
+}
+
+interface PersonDetails {
+  id: number;
+  name: string;
+  profile_path: string | null;
+  biography: string;
+  birthday: string | null;
+  deathday: string | null;
+  place_of_birth: string | null;
+  known_for_department: string;
+  popularity: number;
+  also_known_as: string[];
+}
+
+interface TVShow {
+  id: number;
+  name: string;
+  adult: boolean;
+  backdrop_path: string | null;
+  genre_ids: number[];
+  original_language: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string | null;
+  first_air_date: string;
+  vote_average: number;
+  vote_count: number;
+}
+
+interface TVShowDetails {
+  id: number;
+  name: string;
+  adult: boolean;
+  backdrop_path: string | null;
+  episode_run_time: number[];
+  first_air_date: string;
+  last_air_date: string;
+  genres: { id: number; name: string }[];
+  homepage: string | null;
+  in_production: boolean;
+  languages: string[];
+  number_of_episodes: number;
+  number_of_seasons: number;
+  overview: string | null;
+  popularity: number;
+  poster_path: string | null;
+  production_companies: {
+    id: number;
+    name: string;
+    logo_path: string | null;
+    origin_country: string;
+  }[];
+  seasons: {
+    id: number;
+    name: string;
+    episode_count: number;
+    poster_path: string | null;
+    season_number: number;
+    air_date: string;
+  }[];
+  status: string;
+  tagline: string | null;
+  vote_average: number;
+  vote_count: number;
 }
