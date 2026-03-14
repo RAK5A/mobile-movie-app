@@ -11,13 +11,17 @@ module.exports = {
         light: {
           100: "#D6C6FF",
           200: "#A8B5DB",
-          300: "9CA4AB",
+          300: "#9CA4AB",
+        },
+        gray: {
+          100: '#D1D5DB',
+          200: '#9CA3AF',
         },
         dark: {
-          100: "221f3d",
-          200: "0f0d23",
+          100: "#221f3d",
+          200: "#0f0d23",
         },
-        accent: "AB8BFF"
+        accent: "#AB8BFF"
       }
     },
   },
