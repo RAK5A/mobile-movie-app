@@ -32,6 +32,14 @@ npm install
 npm i react-native-webview
 ```
 
+```bash
+npm i react-native-youtube-iframe
+```
+
+```bash
+npm i expo-linear-gradient
+```
+
 **Set Up Environment Variables**
 
 Create a new file named `.env` in the root of your project and add the following content:
