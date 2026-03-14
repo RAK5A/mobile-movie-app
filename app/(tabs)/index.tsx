@@ -94,11 +94,11 @@ export default function Index() {
             />
             {/* Latest Section */}
             <MovieSection
-              title="Latest Movies"
+              title="Discover Movies"
               data={movies}
               loading={moviesLoading}
               error={moviesError}
-              category="latest"
+              category="discover"
             />
             {/* Top Rated Section */}
             <MovieSection
