@@ -1,31 +1,31 @@
-import MovieCard from "@/components/PosterCard";
-import { icons } from "@/constants/icons";
-import { fetchMoviesByCategory } from "@/services/api";
-import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
 import {
-  ActivityIndicator,
-  FlatList,
-  Image,
+  View,
   Text,
   TouchableOpacity,
-  View,
+  Image,
+  ActivityIndicator,
+  FlatList,
 } from "react-native";
+import React, { useEffect, useState } from "react";
+import { router, useLocalSearchParams } from "expo-router";
+import { fetchTVShowsByCategory } from "@/services/api";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { icons } from "@/constants/icons";
+import PosterCard from "@/components/PosterCard";
 
-export default function SeeAll() {
+export default function SeeAllTVShow() {
   const { category, title } = useLocalSearchParams();
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [tvs, setTvs] = useState<TVShow[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [page, setPage] = useState(1);
 
-  const loadMovies = async (pageNum: number) => {
+  const loadTVs = async (pageNum: number) => {
     try {
-      const results = await fetchMoviesByCategory(category as string, pageNum);
-      setMovies((prev) => (pageNum === 1 ? results : [...prev, ...results]));
-    } catch (e) {
-      console.error(e);
+      const results = await fetchTVShowsByCategory(category as string, pageNum);
+      setTvs((prev) => (pageNum === 1 ? results : [...prev, ...results]));
+    } catch (error) {
+      console.log(error);
     } finally {
       setLoading(false);
       setLoadingMore(false);
@@ -33,7 +33,7 @@ export default function SeeAll() {
   };
 
   useEffect(() => {
-    loadMovies(1);
+    loadTVs(1);
   }, [category]);
 
   const handleLoadMore = () => {
@@ -41,7 +41,7 @@ export default function SeeAll() {
       setLoadingMore(true);
       const nextPage = page + 1;
       setPage(nextPage);
-      loadMovies(nextPage);
+      loadTVs(nextPage);
     }
   };
 
@@ -63,12 +63,12 @@ export default function SeeAll() {
         <ActivityIndicator size="large" color="#fff" className="mt-10" />
       ) : (
         <FlatList
-          data={movies}
-          renderItem={({ item }) => <MovieCard {...item} />}
+          data={tvs}
           keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => <PosterCard {...item} type="tv"/>}
           numColumns={3}
           columnWrapperStyle={{
-            justifyContent: "flex-start",
+            justifyContent: "center",
             gap: 20,
             paddingRight: 5,
             marginBottom: 10,
@@ -78,7 +78,7 @@ export default function SeeAll() {
           onEndReachedThreshold={0.5}
           ListFooterComponent={
             loadingMore ? (
-              <ActivityIndicator size="small" color="#fff" className="my-4" />
+              <ActivityIndicator size="large" color="#fff" className="my-4" />
             ) : null
           }
         />

@@ -2,18 +2,36 @@ import { icons } from "@/constants/icons";
 import { Link } from "expo-router";
 import { Image, Pressable, Text, View } from "react-native";
 
-export default function MovieCard({
+type PosterCardProps = {
+  id: number;
+  poster_path: string | null;
+  title?: string; // movie
+  name?: string; // tv show
+  vote_average: number;
+  release_date?: string; // movie
+  first_air_date?: string; // tv show
+  containerClassName?: string;
+  type?: "movie" | "tv"; // ← to know which route to navigate to
+};
+
+export default function PosterCard({
   id,
   poster_path,
   title,
+  name,
   vote_average,
   release_date,
+  first_air_date,
   containerClassName,
-}: Movie & { containerClassName?: string }) {
+  type = "movie",
+}: PosterCardProps) {
+  const displayTitle = title ?? name ?? "Unknown";
+  const displayYear = (release_date ?? first_air_date)?.split("-")[0] ?? "N/A";
+  const href = type === "tv" ? `/tv_shows/${id}` : `/movies/${id}`; // route of project
+
   return (
     <>
-      <Link href={`/movies/${id}`} asChild>
-        {/* <Pressable className="w-[30%]"> */}
+      <Link href={href as any} asChild>
         <Pressable className={containerClassName ?? "w-[30%]"}>
           <View>
             <Image
@@ -26,32 +44,20 @@ export default function MovieCard({
               resizeMode="cover"
             />
           </View>
+
           <Text className="font-bold text-sm text-white mt-2" numberOfLines={1}>
-            {title}
+            {displayTitle}
           </Text>
-
-          {/* <View className="flex-row items-center justify-start gap-x-1">
-            <Image source={icons.star} className="size-4" />
-            <Text className="text-xs text-white font-bold uppercase">
-              {Math.round(vote_average)}
-            </Text>
-          </View>
-
-          <View className="flex-row items-center justify-between">
-            <Text className="text-xs text-light-200 font-medium mt-1">
-              {release_date?.split("-")[0]}
-            </Text>
-          </View> */}
 
           <View className="mt-3 flex-row justify-between">
             <View className="flex-row items-center justify-start gap-x-1">
               <Image source={icons.star} className="size-4" />
               <Text className="text-xs text-white font-bold uppercase">
-                {vote_average.toFixed(1)}
+                {(vote_average ?? 0).toFixed(1)}
               </Text>
             </View>
             <Text className="text-xs text-light-200 font-medium mt-1">
-              {release_date?.split("-")[0]}
+              {displayYear}
             </Text>
           </View>
         </Pressable>

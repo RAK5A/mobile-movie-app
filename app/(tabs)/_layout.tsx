@@ -79,7 +79,7 @@ export default function _layout() {
           headerShown: false,
           title: "People",
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.person} title="People" />
+            <TabIcon focused={focused} icon={icons.team} title="People" />
           ),
         }}
       />

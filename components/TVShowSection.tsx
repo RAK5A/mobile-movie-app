@@ -7,32 +7,32 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import PosterCard from "./PosterCard";
 
-interface MovieSectionProps {
+interface TVShowSectionProps {
   title: string;
-  data: Movie[] | null;
+  data: TVShow[] | null;
   loading: boolean;
   error: Error | null;
   category: string;
 }
 
-export default function MovieSection({
+export default function TVShowSection({
   title,
   data,
   loading,
   error,
   category,
-}: MovieSectionProps) {
+}: TVShowSectionProps) {
   return (
     <View>
       <View className="flex-row items-center justify-between mt-5 mb-3">
         <Text className="text-lg text-white font-bold">{title}</Text>
         <TouchableOpacity
           onPress={() =>
-            router.push(`/movies/see_all?category=${category}&title=${title}`)
+            router.push(`/tv_shows/see_all?category=${category}&title=${title}`)
           }
         >
           <View className="flex-row gap-x-2">
@@ -51,7 +51,7 @@ export default function MovieSection({
         <FlatList
           data={data}
           renderItem={({ item }) => (
-            <PosterCard {...item} containerClassName="w-32" type="movie" />
+            <PosterCard {...item} containerClassName="w-32" type="tv" />
           )}
           keyExtractor={(item) => item.id.toString()}
           horizontal

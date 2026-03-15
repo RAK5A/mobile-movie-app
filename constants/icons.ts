@@ -9,6 +9,7 @@ import arrow from "@/assets/icons/arrow.png";
 import tv_show from "@/assets/icons/tv_show.png";
 import tv from "@/assets/icons/tv.png";
 import clapperboard from "@/assets/icons/clapperboard.png";
+import team from "@/assets/icons/team.png";
 
 export const icons = {
   home,
@@ -21,6 +22,7 @@ export const icons = {
   arrow,
   tv_show,
   tv,
-  clapperboard
+  clapperboard,
+  team,
 };
 
