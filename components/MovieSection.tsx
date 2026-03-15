@@ -7,9 +7,9 @@ import {
   Image,
 } from "react-native";
 import React from "react";
-import MovieCard from "./MovieCard";
 import { router } from "expo-router";
 import { icons } from "@/constants/icons";
+import PosterCard from "./PosterCard";
 
 interface MovieSectionProps {
   title: string;
@@ -51,7 +51,7 @@ export default function MovieSection({
         <FlatList
           data={data}
           renderItem={({ item }) => (
-            <MovieCard {...item} containerClassName="w-32" />
+            <PosterCard {...item} containerClassName="w-32" type="movie" />
           )}
           keyExtractor={(item) => item.id.toString()}
           horizontal

@@ -1,4 +1,3 @@
-import MovieCard from "@/components/MovieCard";
 import { fetchMoviesByCategory } from "@/services/api";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
