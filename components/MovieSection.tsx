@@ -1,14 +1,14 @@
+import { icons } from "@/constants/icons";
+import { router } from "expo-router";
+import React from "react";
 import {
-  View,
-  Text,
   ActivityIndicator,
   FlatList,
-  TouchableOpacity,
   Image,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import React from "react";
-import { router } from "expo-router";
-import { icons } from "@/constants/icons";
 import PosterCard from "./PosterCard";
 
 interface MovieSectionProps {

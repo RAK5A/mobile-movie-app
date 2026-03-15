@@ -1,3 +1,5 @@
+import PosterCard from "@/components/PosterCard";
+import { icons } from "@/constants/icons";
 import { fetchMoviesByCategory } from "@/services/api";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -10,8 +12,6 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { icons } from "@/constants/icons";
-import PosterCard from "@/components/PosterCard";
 
 export default function SeeAllMovies() {
   const { category, title } = useLocalSearchParams();

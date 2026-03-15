@@ -59,19 +59,19 @@ npx expo start
 
 ```
 
-Start on web
+**Start on web**
 
 ```bash
 npm run web
 ```
 
-Start on Android
+**Start on Android**
 
 ```bash
 npm run android
 ```
 
-Start on IOS
+**Start on IOS**
 
 ```bash
 npm run ios
