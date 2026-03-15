@@ -173,11 +173,11 @@ export const fetchPeopleId = async (personId: string) => {
     method: "GET",
     headers: TMDB_CONFIG.headers,
   });
-  
+
   if (!response.ok) throw new Error("Failed to fetch person detail");
-  
+
   const data = await response.json();
-  
+
   return data.results;
 };
 
@@ -195,11 +195,11 @@ export const fetchPersonMovies = async (personId: string) => {
     `${TMDB_CONFIG.BASE_URL}/person/${personId}/movie_credits`,
     { method: "GET", headers: TMDB_CONFIG.headers },
   );
-  
+
   if (!response.ok) throw new Error("Failed to fetch person movie");
-  
+
   const data = await response.json();
-  
+
   return data.cast.slice(0, 10);
 };
 
@@ -209,18 +209,18 @@ export const fetchTVShow = async ({
   query: string;
 }): Promise<TVShow[]> => {
   const endpoint = query
-  ? `${TMDB_CONFIG.BASE_URL}/search/tv?query=${encodeURIComponent(query)}`
-  : `${TMDB_CONFIG.BASE_URL}/discover/tv?sort_by=popularity.desc`;
-  
+    ? `${TMDB_CONFIG.BASE_URL}/search/tv?query=${encodeURIComponent(query)}`
+    : `${TMDB_CONFIG.BASE_URL}/discover/tv?sort_by=popularity.desc`;
+
   const response = await fetch(endpoint, {
     method: "GET",
     headers: TMDB_CONFIG.headers,
   });
-  
+
   if (!response.ok) {
     throw new Error(`Failed to fetch tv show: ${response.statusText}`);
   }
-  
+
   const data = await response.json();
   return data.results;
 };
@@ -230,11 +230,11 @@ export const fetchPopularTvShow = async () => {
     method: "GET",
     headers: TMDB_CONFIG.headers,
   });
-  
+
   if (!response.ok) throw new Error("Failed to fetch tv show");
-  
+
   const data = await response.json();
-  
+
   return data.results.slice(0, 10);
 };
 
@@ -249,7 +249,7 @@ export const fetchTrendingTVShows = async (): Promise<TVShow[]> => {
       `Failed to fetch trending tv shows: ${response.statusText}`,
     );
   }
-  
+
   const data = await response.json();
   return data.results.slice(0, 10); // ← show only 10 movies
 };
@@ -259,7 +259,7 @@ export const fetchTopRatedTVShows = async (): Promise<TVShow[]> => {
     method: "GET",
     headers: TMDB_CONFIG.headers,
   });
-  
+
   if (!response.ok) {
     throw new Error(
       `Failed to fetch top rated tv shows: ${response.statusText}`,
@@ -275,7 +275,7 @@ export const fetchOnTheAirTVShows = async (): Promise<TVShow[]> => {
     method: "GET",
     headers: TMDB_CONFIG.headers,
   });
-  
+
   if (!response.ok) {
     throw new Error(
       `Failed to fetch on the air tv shows: ${response.statusText}`,
@@ -294,18 +294,18 @@ export const fetchTVShowsDetail = async (
       `${TMDB_CONFIG.BASE_URL}/tv/${tvId}?api_key=${TMDB_CONFIG.API_KEY}`,
       { method: "GET", headers: TMDB_CONFIG.headers },
     );
-    
+
     if (!response.ok)
       throw new Error(
-    `Failed to fetch tv show details: ${response.statusText}`,
-  );
-  
-  const data = await response.json();
-  return data;
-} catch (error) {
-  console.log("Error fetching tv show details:", error);
-  throw error;
-}
+        `Failed to fetch tv show details: ${response.statusText}`,
+      );
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log("Error fetching tv show details:", error);
+    throw error;
+  }
 };
 
 export const fetchTVShowTrailer = async (
@@ -316,10 +316,10 @@ export const fetchTVShowTrailer = async (
       `https://api.themoviedb.org/3/tv/${tvId}/videos?api_key=${TMDB_CONFIG.API_KEY}`,
       { method: "GET", headers: TMDB_CONFIG.headers },
     );
-    
+
     if (!response.ok)
       throw new Error(`Failed to fetch trailer: ${response.statusText}`);
-    
+
     const data = await response.json();
     const trailer = data.results.find(
       (vid: any) => vid.type === "Trailer" && vid.site === "YouTube",
@@ -336,11 +336,31 @@ export const fetchTVShowCast = async (tvId: string) => {
     method: "GET",
     headers: TMDB_CONFIG.headers,
   });
-  
+
   if (!response.ok) throw new Error("Failed to fetch cast");
-  
+
   const data = await response.json();
   return data.cast.slice(0, 10); // top 10 cast members
+};
+
+export const fetchPersonTVShows = async (personId: string) => {
+  const response = await fetch(
+    `${TMDB_CONFIG.BASE_URL}/person/${personId}/tv_credits`,
+    { method: "GET", headers: TMDB_CONFIG.headers }
+  );
+  if (!response.ok) throw new Error("Failed to fetch person tv shows");
+  const data = await response.json();
+  return data.cast.slice(0, 10);
+};
+
+export const fetchAllTVShowCast = async (tvId: string) => {
+  const response = await fetch(`${TMDB_CONFIG.BASE_URL}/tv/${tvId}/credits`, {
+    method: "GET",
+    headers: TMDB_CONFIG.headers,
+  });
+  if (!response.ok) throw new Error("Failed to fetch cast");
+  const data = await response.json();
+  return data.cast;
 };
 
 export const fetchTVShowsByCategory = async (
