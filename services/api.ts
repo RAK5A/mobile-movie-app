@@ -125,7 +125,7 @@ export const fetchMoviesByCategory = async (
     discover: `${TMDB_CONFIG.BASE_URL}/discover/movie?sort_by=popularity.desc&page=${page}`,
   };
 
-  const response = await fetch(`${endpoints[category]}&page=${page}`, {
+  const response = await fetch(`${endpoints[category]}`, {
     method: "GET",
     headers: TMDB_CONFIG.headers,
   });
@@ -374,7 +374,7 @@ export const fetchTVShowsByCategory = async (
     discover: `${TMDB_CONFIG.BASE_URL}/discover/tv?sort_by=popularity.desc&page=${page}`,
   };
 
-  const response = await fetch(`${endpoints[category]}&page=${page}`, {
+  const response = await fetch(`${endpoints[category]}`, {
     method: "GET",
     headers: TMDB_CONFIG.headers,
   });
