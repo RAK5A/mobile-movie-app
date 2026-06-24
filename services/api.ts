@@ -54,7 +54,7 @@ export const fetchMovieTrailer = async (
 ): Promise<string | null> => {
   try {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${TMDB_CONFIG.API_KEY}`,
+      `${TMDB_CONFIG.BASE_URL}/movie/${movieId}/videos?api_key=${TMDB_CONFIG.API_KEY}`,
       { method: "GET", headers: TMDB_CONFIG.headers },
     );
 
@@ -313,7 +313,7 @@ export const fetchTVShowTrailer = async (
 ): Promise<string | null> => {
   try {
     const response = await fetch(
-      `https://api.themoviedb.org/3/tv/${tvId}/videos?api_key=${TMDB_CONFIG.API_KEY}`,
+      `${TMDB_CONFIG.BASE_URL}/tv/${tvId}/videos?api_key=${TMDB_CONFIG.API_KEY}`,
       { method: "GET", headers: TMDB_CONFIG.headers },
     );
 
