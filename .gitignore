@@ -45,3 +45,6 @@ app-example
 echo "services/API_Key.txt" >> .gitignore
 echo ".env" >> .gitignore
 echo "*.env" >> .gitignore  # Catch all .env files
+
+services/API_KEY.txt
+.env
